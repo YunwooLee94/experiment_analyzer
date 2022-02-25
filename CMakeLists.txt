@@ -18,7 +18,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
   tf2
-  tf_conversions
+  tf_conversions zed_interfaces
 )
 include_directories(include ${catkin_INCLUDE_DIRS})
 
