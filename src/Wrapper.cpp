@@ -63,6 +63,7 @@ void RosWrapper::cbPointCloud(const sensor_msgs::PointCloud2::ConstPtr &pointClo
         tf::Transform transform_Tbc;
         {   //Tbc
 
+
             transform_Tbc.setOrigin(tf::Vector3(0.0,-0.06,0.0));
             tf::Quaternion q;
             q.setRPY(-M_PI_2, 0.0, -M_PI_2);
