@@ -34,6 +34,10 @@ class RosWrapper{
     struct State{
         pcl::PointCloud<pcl::PointXYZRGB> pcl_Extracted;
     };
+    struct zedBox3d{
+        vector<analyzer_client::Point> corners;
+        vector<analyzer_client::Point> skeletons;
+    };
 private:
     ros::NodeHandle nh;
     string global_frame_id;
@@ -41,10 +45,13 @@ private:
     string base_frame_id;
     string left_frame_id;
     string drone_pose_topic_name;
+    zed_interfaces::ObjectsStamped * transformedObjects;
 
     tf::TransformBroadcaster* tfBroadcasterPtr;
     tf::TransformListener* tfListenerPtr;
     State state;
+//    vector<zedBox3d> transformedObjCorners;
+
 //    ros::Subscriber subZedPose;
     ros::Subscriber subPointCloud;
     ros::Subscriber subZedPose;
@@ -56,10 +63,11 @@ private:
 
     ros::Publisher pubZed2Pose;
     ros::Publisher pubPointCloud;
+    ros::Publisher pubObjectsDetection;
 
     sensor_msgs::PointCloud2 pclReceived;
 
-    mutex mSet[2];
+    mutex mSet[3]; // 0: Pose, 1: Pointcloud 2: Object Detection
 
     geometry_msgs::PoseStamped drone_pose;
 

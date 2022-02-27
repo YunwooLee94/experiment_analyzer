@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="is_bag" default="true"/>
-    <arg name="bag_file" default="$(find experiment_analyzer)/world/good_sc2.bag"/>
+    <arg name="bag_file" default="$(find experiment_analyzer)/world/good_sc1.bag"/>
     <arg name="rviz_display" default="true"/>
     <arg name="use_sim_time" default="true"/>
     <group if = "$(arg is_bag)">
