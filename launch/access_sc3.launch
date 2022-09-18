@@ -1,17 +1,18 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="is_bag" default="true"/>
-    <arg name="bag_file" default="$(find experiment_analyzer)/world/good_sc2.bag"/>
+    <arg name="bag_file" default="$(find experiment_analyzer)/world/access_sc3.bag"/>
     <arg name="rviz_display" default="true"/>
     <arg name="use_sim_time" default="true"/>
-    <arg name="log_file_prefix" default="$(find experiment_analyzer)/log/log"/>
+    <arg name="log_file_prefix" default="$(find experiment_analyzer)/log/access_sc3"/>
     <arg name="resource_file_prefix" default="$(find experiment_analyzer)/resource/log"/>
+    <arg name="scenario_number" default="3"/>
     <group if = "$(arg is_bag)">
-        <node name="ros_bag_play" pkg="rosbag" type="play" args="--clock -r 2.0 -s 0 $(arg bag_file)" >
+        <node name="ros_bag_play" pkg="rosbag" type="play" args="--clock -r 1.0 -s 0 $(arg bag_file)" >
         </node>
     </group>
     <group if = "$(arg rviz_display)">
-        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find experiment_analyzer)/launch/rviz_config/abc.rviz" output="log"/>
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find experiment_analyzer)/launch/rviz_config/video3.rviz" output="log"/>
     </group>
 
     <node pkg="experiment_analyzer" type="interpreter" name="interpreter" output="screen">
@@ -23,6 +24,7 @@
         <param name="bearing_hz" value="5"/>
         <param name="log_file_prefix" value="$(arg log_file_prefix)"/>
         <param name="resource_file_prefix" value="$(arg resource_file_prefix)"/>
+        <param name="scenario_number" value="$(arg scenario_number)"/>
     </node>
 
 </launch>

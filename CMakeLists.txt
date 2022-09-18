@@ -19,6 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   tf2
   tf_conversions zed_interfaces
+        obstacle_detector
 )
 include_directories(include ${catkin_INCLUDE_DIRS})
 
@@ -33,3 +34,10 @@ file(GLOB FLIGHT_DATA_SRC src/Wrapper.cpp)
 
 add_executable(interpreter exe/main.cpp ${FLIGHT_DATA_SRC})
 target_link_libraries(interpreter ${catkin_LIBRARIES})
+
+add_executable(flag_record_on exe/flag_on.cpp)
+target_link_libraries(flag_record_on ${catkin_LIBRARIES})
+
+add_executable(flag_record_off exe/flag_off.cpp)
+target_link_libraries(flag_record_off ${catkin_LIBRARIES})
+

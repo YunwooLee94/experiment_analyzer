@@ -21,7 +21,9 @@
 #include <pcl_conversions/pcl_conversions.h>
 #include <Eigen/Core>
 #include <Eigen/Eigenvalues>
+#include <std_msgs/Bool.h>
 
+#include <obstacle_detector/Obstacles.h>
 #include <experiment_analyzer/Utils.h>
 
 using namespace std;
@@ -55,6 +57,27 @@ private:
     string base_frame_id;
     string left_frame_id;
     string drone_pose_topic_name;
+    string log_file_prefix;
+    string log_file_name_drone;
+    string log_file_name_target;
+    string log_file_name_dummy;
+    string log_file_name_bearing;
+
+    string resource_file_prefix;
+    string resource_file_name_drone;
+    string resource_file_name_target;
+    string resource_file_name_dummy;
+    string resource_file_name_bearing;
+
+    int scenario_number;
+
+
+    int history_hz;
+    int bearing_hz;
+
+    bool flag_record_on = false;
+    bool flag_record_off = false;
+
     zed_interfaces::ObjectsStamped * transformedObjects;
     vector<double> height_object;
     vector<posInfo> pos_object;
@@ -73,6 +96,14 @@ private:
     nav_msgs::Path targetPosHistory_rev;
     nav_msgs::Path dummyPosHistory_rev;
 
+    nav_msgs::Path dronePosHistoryTotal;
+    nav_msgs::Path targetPosHistoryTotal;
+    nav_msgs::Path dummyPosHistoryTotal;
+
+    visualization_msgs::MarkerArray detectedObstacles;
+
+    visualization_msgs::MarkerArray bearingHistory;
+    visualization_msgs::MarkerArray bearingHistoryTotal;
 
     tf::TransformBroadcaster* tfBroadcasterPtr;
     tf::TransformListener* tfListenerPtr;
@@ -89,6 +120,9 @@ private:
     ros::Subscriber subDronePosHistory;
     ros::Subscriber subDummyPosHistory;
     ros::Subscriber subOptimizationResult;
+    ros::Subscriber subFlagOn;
+    ros::Subscriber subFlagOff;
+    ros::Subscriber subObstacles;
 
     void cbCurrentPose(const geometry_msgs::PoseStamped::ConstPtr & robotPoseInfo);
     void cbPointCloud(const sensor_msgs::PointCloud2::ConstPtr & pointCloudInfo);
@@ -99,6 +133,9 @@ private:
     void cbTargetPosHistory(const visualization_msgs::MarkerArray::ConstPtr & targetHistoryInfo);
     void cbDummyPosHistory(const visualization_msgs::MarkerArray::ConstPtr & dummyHistoryInfo);
     void cbOptimizationResult(const visualization_msgs::MarkerArray::ConstPtr & optimizationInfo);
+    void cbFlagOn(const std_msgs::Bool::ConstPtr & flagOnInfo);
+    void cbFlagOff(const std_msgs::Bool::ConstPtr & flagOffInfo);
+    void cbObstacles(const obstacle_detector::Obstacles & staticObstacleInfo);
     bool isDronePoseReceived = false;
 
     ros::Publisher pubZed2Pose;
@@ -109,6 +146,13 @@ private:
     ros::Publisher pubDronePosHistory;
     ros::Publisher pubTargetPosHistory;
     ros::Publisher pubDummyPosHistory;
+    ros::Publisher pubBearingHistory;
+    ros::Publisher pubDetectedObstacles;
+
+    ros::Publisher pubDroneTotalPath;
+    ros::Publisher pubTargetTotalPath;
+    ros::Publisher pubDummyTotalPath;
+    ros::Publisher pubTotalBearing;
 
     ros::Publisher pubTargetPosHistoryRev;
     ros::Publisher pubDummyPosHistoryRev;
@@ -131,6 +175,7 @@ private:
 public:
     RosWrapper();
     void run();
+    void readTotalPath();
 };
 
 
