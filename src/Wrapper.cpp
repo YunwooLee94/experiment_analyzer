@@ -777,7 +777,7 @@ RosWrapper::RosWrapper() {
     subOptimizationResult = nh.subscribe("/server/plan_traj_marker",1, &RosWrapper::cbOptimizationResult,this);
     subFlagOn = nh.subscribe("/flag_record_on/record_on",1, &RosWrapper::cbFlagOn, this);
     subFlagOff = nh.subscribe("/flag_record_off/record_off", 1, &RosWrapper::cbFlagOff, this);
-    subObstacles = nh.subscribe("/obstacles",1, &RosWrapper::cbObstacles,this);
+    subObstacles = nh.subscribe("/raw_obstacles",1, &RosWrapper::cbObstacles,this);
 
     pubZed2Pose = nh.advertise<geometry_msgs::PoseStamped>("zed2_pose",1);
     pubPointCloud = nh.advertise<sensor_msgs::PointCloud2>("point_cloud",1);

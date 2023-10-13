@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="is_bag" default="true"/>
-    <arg name="bag_file" default="$(find experiment_analyzer)/world/access_sc3.bag"/>
+    <arg name="bag_file" default="$(find experiment_analyzer)/world/dual_exp_sc3.bag"/>
     <arg name="rviz_display" default="true"/>
     <arg name="use_sim_time" default="true"/>
     <arg name="log_file_prefix" default="$(find experiment_analyzer)/log/access_sc3"/>
@@ -12,7 +12,7 @@
         </node>
     </group>
     <group if = "$(arg rviz_display)">
-        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find experiment_analyzer)/launch/rviz_config/video3.rviz" output="log"/>
+        <node name="rviz" pkg="rviz" type="rviz" args="-d $(find experiment_analyzer)/launch/rviz_config/dual_sc3.rviz" output="log"/>
     </group>
 
     <node pkg="experiment_analyzer" type="interpreter" name="interpreter" output="screen">
